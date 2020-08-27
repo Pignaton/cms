@@ -239,7 +239,7 @@ return [
         [
             'text'        => 'dashboard',
             'url'         => 'painel',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-tachometer-alt',
         ],
         [
             'text'        => 'Todas as Páginas',
@@ -249,7 +249,7 @@ return [
         [
             'text'        => 'Todo os Usuários',
             'url'         => 'painel/users',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-users',
         ],
         ['header' => 'account_settings'],
         [
