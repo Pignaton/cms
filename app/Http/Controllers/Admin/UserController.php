@@ -45,24 +45,24 @@ class UserController extends Controller
             'email',
             'password',
             'password_confirmation'
-        ]); 
-        
-       $validator = $this->validator($datas);
+        ]);
 
-       if($validator->fails()){
+        $validator = $this->validator($datas);
+
+        if ($validator->fails()) {
             return redirect()->route('users.create')
-                             ->withErrors($validator)
-                             ->withInput();
-       }
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-       $user = new User;
+        $user = new User;
 
-       $user->name = $datas['name'];
-       $user->email = $datas['email'];
-       $user->password = Hash::make($datas['password']);
-       $user->save();
+        $user->name = $datas['name'];
+        $user->email = $datas['email'];
+        $user->password = Hash::make($datas['password']);
+        $user->save();
 
-       return redirect()->route('users.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -84,7 +84,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        if ($user) {
+            return view('admin.users.edit', ['user' => $user]);
+        }
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -96,7 +102,63 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        if ($user) {
+
+            $datas = $request->only([
+                'name',
+                'email',
+                'password',
+                'password_confirmation'
+            ]);
+
+            $validator = Validator::make([
+                'name' => $datas['name'],
+                'email' => $datas['email']
+            ], [
+                'name' => 'required|string|max:100',
+                'email' => 'required|string|email|max:100'
+            ]);
+
+            $user->name = $datas['name'];
+
+            if ($user->email != $datas['email']) {
+                $hasEmail = User::where('email', $datas['email'])->get();
+                if (count($hasEmail) === 0) {
+                    $user->email = $datas['email'];
+                } else {
+                    $validator->errors()->add('email', __('validation.unique', [
+                        'attribute' => 'email'
+                    ]));
+                }
+            }
+
+            if (!empty($datas['password'])) {
+                if (strlen($datas['password']) >= 4) {
+                    if ($datas['password'] === $datas['password_confirmation']) {
+                        $user->password = Hash::make($datas['password']);
+                    } else {
+                        $validator->errors()->add('password', __('validation.confirmed', [
+                            'attribute' => 'password',
+                        ]));
+                    }
+                } else {
+                    $validator->errors()->add('password', __('validation.min.string', [
+                        'attribute' => 'password',
+                        'min' => 4
+                    ]));
+                }
+            }
+
+            if (count($validator->errors()) > 0) {
+                return redirect()->route('users.edit', ['user' => $id])
+                    ->withErrors($validator);
+            }
+
+            $user->save();
+        }
+        return redirect()->route('users.index');
     }
 
     /**
@@ -110,11 +172,12 @@ class UserController extends Controller
         //
     }
 
-    public function validator(array $datas){
+    public function validator(array $datas)
+    {
         return Validator::make($datas, [
             'name' =>  'required|string|max:100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:4|confirmed'
         ]);
-    } 
+    }
 }
