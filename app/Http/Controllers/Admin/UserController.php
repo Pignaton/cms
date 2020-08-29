@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -168,8 +169,16 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+
+       $loggedId = intval(Auth::id());
+
+       if($loggedId !== intval($id)){
+            $user = User::find($id);
+            $user->delete();
+       }
+
+       return redirect()->route('users.index');
     }
 
     public function validator(array $datas)
