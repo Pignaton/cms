@@ -28,11 +28,13 @@
                             <td>{{$user->email}}</td>
                             <td>
                             <a href="{{route('users.edit', ['user' => $user->id])}}" class="btn btn-sm btn-warning">Editar</a>
-                                <form class="d-inline" action="{{route('users.destroy', ['user' => $user->id])}}" method="post" onsubmit = "return confirm('Tem certeza que deseja excluir?')">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger">Excluir</button>
-                                </form>
+                                @if ($loggedId !== $user->id)
+                                    <form class="d-inline" action="{{route('users.destroy', ['user' => $user->id])}}" method="post" onsubmit = "return confirm('Tem certeza que deseja excluir?')">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger">Excluir</button>
+                                    </form>
+                                @endif   
                             </td>
                         </tr>
                         @endforeach

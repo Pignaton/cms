@@ -250,6 +250,7 @@ return [
             'text'        => 'Todo os Usuários',
             'url'         => 'painel/users',
             'icon'        => 'fas fa-users',
+            'can'         => 'edit-users'
         ],
         ['header' => 'account_settings'],
         [

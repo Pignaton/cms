@@ -11,6 +11,11 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:edit-users');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +24,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
+        $loggedId = intval(Auth::id());
 
-        return view('admin.users.index', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users, 'loggedId' => $loggedId]);
     }
 
     /**
@@ -169,16 +175,16 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {   
+    {
 
-       $loggedId = intval(Auth::id());
+        $loggedId = intval(Auth::id());
 
-       if($loggedId !== intval($id)){
+        if ($loggedId !== intval($id)) {
             $user = User::find($id);
             $user->delete();
-       }
+        }
 
-       return redirect()->route('users.index');
+        return redirect()->route('users.index');
     }
 
     public function validator(array $datas)
