@@ -254,8 +254,13 @@ return [
         ],
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Configurações do Site',
+            'url'  => 'painel/settings',
+            'icon' => 'far fa-fw fa-file',
+        ],
+        [
+            'text' => 'Meu Perfil',
+            'url'  => 'painel/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
     ],
