@@ -40,3 +40,5 @@ Route::prefix('painel')->group(function () {
 
     Route::get('homesearch', 'Admin\HomeController@index')->name('home.index');
 });
+
+Route::fallback('Site\PageController@index');
