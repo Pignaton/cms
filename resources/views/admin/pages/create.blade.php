@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label for="body" class="col-sm-2 control-label">Corpo</label>
                         <div class="col-sm">
-                            <textarea name="body" class="form-control">{{ old('body') }}</textarea>
+                            <textarea name="body" class="form-control bodytextarea">{{ old('body') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -47,4 +47,22 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea.bodytextarea',
+            height: 300,
+            menubar: false,
+            plugins: ['link', 'table', 'lists', 'autoresize', 'image'],
+            toolbar: 'fontselect | fontsizeselect | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | rotateleft rotateright | imageoptions | table | link image | bullist numlist',
+            content_css: ['{{ asset('assets/css/content.css') }}'],
+            fontsize_formats: '8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt',
+            font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
+            //images_upload_url: '{{ route('imageupload') }}',
+            images_upload_credentials: true,
+            convert_urls: false
+        });
+
+    </script>
 @endsection
