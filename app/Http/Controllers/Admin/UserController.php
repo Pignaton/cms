@@ -141,6 +141,7 @@ class UserController extends Controller
                 }
             }
 
+            //Alterando senha
             if (!empty($datas['password'])) {
                 if (strlen($datas['password']) >= 4) {
                     if ($datas['password'] === $datas['password_confirmation']) {

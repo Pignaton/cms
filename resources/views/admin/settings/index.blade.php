@@ -46,21 +46,22 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">Cor do fundo</label>
-                            <input type="color" name="bgcolor" id="bgcolor" class="form-control"
-                                value="{{ $settings['bgcolor'] }}" placeholder="" aria-describedby="helpId5">
-                        </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Cor do fundo</label>
+                    <div class="col-sm-10">
+                        <input type="color" name="bgcolor" id="bgcolor" class="form-control"
+                            value="{{ $settings['bgcolor'] }}" placeholder="" aria-describedby="helpId5"
+                            style="width: 70px;">
                     </div>
+                </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">Cor do texto</label>
-                            <input type="color" name="textcolor" id="textcolor" class="form-control"
-                                value="{{ $settings['textcolor'] }}" placeholder="" aria-describedby="helpId6">
-                        </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Cor do texto</label>
+                    <div class="col-sm-10">
+                        <input type="color" name="textcolor" id="textcolor" class="form-control"
+                            value="{{ $settings['textcolor'] }}" placeholder="" aria-describedby="helpId6"
+                            style="width: 70px;">
                     </div>
                 </div>
 
